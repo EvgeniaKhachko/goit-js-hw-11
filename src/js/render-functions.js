@@ -1,9 +1,5 @@
 export function showGallery(images)
 {
-
-
-    console.log(images);
-
     let imageHTML = '';
     images.forEach(image => {
       imageHTML += `
