@@ -7,39 +7,45 @@ import {showGallery} from "./js/render-functions.js";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+const gallery = document.querySelector('.gallery');
+const lightbox = new SimpleLightbox('.gallery .gallery__item');
+const loaderElement = document.querySelector('.loader');
+const queryElement = document.querySelector('input');
 
 document.querySelector('.feedback-form').addEventListener('submit', function(event) {
   event.preventDefault();
 
-    document.querySelector('.loader').style.display = 'block';
-
-    const query = document.querySelector('input').value.trim();
+  loaderElement.style.display = 'block';
+  const query = queryElement.value.trim();
 
   if (query === '') {
-    document.querySelector('.loader').style.display = 'none';
+    loaderElement.style.display = 'none';
     iziToast.error({
       title: 'Error',
       message: 'Please enter a search query!',
     });
     return;
   }
-  
+  gallery.innerHTML = '';
+  queryElement.value = '';
+
   fetchImages(query)
     .then(data => {
       if (data.totalHits && (data.totalHits)>0) {
         const imagesForDisplay = data.hits; 
-        console.log(imagesForDisplay);
-        showGallery(imagesForDisplay);
+        const imageHTML = showGallery(imagesForDisplay);
+        gallery.innerHTML = imageHTML;
+        lightbox.refresh();
       } else {
         iziToast.error({
           title: 'Error',
           message: 'Sorry, there are no images matching your search query. Please try again!',
         });
       }
-      document.querySelector('.loader').style.display = 'none';
+      loaderElement.style.display = 'none';
     })
     .catch(error => {
-      document.querySelector('.loader').style.display = 'none';
+      loaderElement.style.display = 'none';
       console.log(error.message);
     });
 

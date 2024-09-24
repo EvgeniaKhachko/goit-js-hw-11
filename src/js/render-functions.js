@@ -15,8 +15,6 @@ export function showGallery(images)
       </figure>
     </a>`;
     });
-    const galleryElement = document.querySelector('.gallery');
-    galleryElement.innerHTML = imageHTML;
-    const lightbox = new SimpleLightbox('.gallery .gallery__item');
-    lightbox.refresh();
+
+    return imageHTML;
 }
