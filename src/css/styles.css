@@ -75,5 +75,5 @@
 }
 .gallery__caption {
   display: inline-block;
-  margin-right: 16px;
+  margin: 16px 16px 0 0;
 }
